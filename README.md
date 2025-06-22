@@ -2,10 +2,13 @@
 Projeto de ED2 - Parte 1: Documento de Design -
 Arch Arcanum
 Autor: Fernando Rezende Domingues Matrícula: 32321BSI022
+
 1. Tema do Projeto e Justificativa:
 O projeto "Arch Arcanum" é um jogo do gênero roguelike deckbuilder com temática de fantasia arcana. O jogador é um Arcanista Renegado que se aventura no Vazio Proibido, e seu grimório de cartas representa seu arsenal de magias. Escolhi este tema pela sua forte afinidade com conceitos da computação, permitindo uma integração natural e criativa de todos os tópicos da ementa de Estruturas de Dados II. Além disso, o gênero roguelike deckbuilder é particularmente adequado ao escopo da disciplina, pois sua estrutura procedural e baseada em sistemas se alinha perfeitamente com a aplicação de algoritmos de forma prática e interessante, sendo também um gênero de jogo que eu particularmente gosto bastante.
+
 2. Visão Geral das Funcionalidades:
 O jogador navegará por um mapa etéreo (um grafo de fluxos de mana) gerado proceduralmente. Cada nó no mapa é um desafio: um duelo arcano por turnos, uma fonte de mana pura ou um evento narrativo místico. Nos duelos, o jogador usa as cartas da sua mão para atacar as Criaturas do Vazio e superar as Anomalias de Mana, gastando "Essência Arcana" como recurso. Após cada vitória, o jogador é recompensado com "Fragmentos Etéreos", que podem ser purificados e infundidos para obter novos feitiços e fortalecer seu grimório para os desafios futuros. O objetivo é chegar ao Coração do Vazio e selá-lo, impedindo sua corrupção.
+
 3. Integração da Ementa: Uma Jornada Mística pelos Dados
 Veja como cada conceito da ementa se manifesta como uma mecânica central e interessante no seu jogo, Arch Arcanum
 
@@ -32,5 +35,6 @@ Reflete a tomada de decisão em cada turno do combate.
 Programação Dinâmica (A Estratégia Fora do Combate)
 Foca no "Deckbuilding" — a montagem do seu grimório.
 •	Mochila 0/1 (Módulo "Configuração do Grimório Pessoal"): Seu "Grimório Pessoal" (o grimório físico que você carrega) tem uma capacidade de páginas limitadas (ou "peso arcano"). Cada carta (feitiço) que você possui na sua coleção tem um custo de páginas e um nível de poder mágico. Antes de iniciar uma desventura, você deve escolher quais feitiços da sua coleção total irão para o grimório que você usará. Você não pode exceder o limite de páginas do seu grimório. O jogo terá um botão de "Otimizar Grimório", que usará o algoritmo da Mochila 0/1 para selecionar o conjunto de feitiços que oferece o maior "nível de poder mágico" total sem ultrapassar a capacidade. Isso é uma integração perfeita e extremamente temática para um mago.
+
 4. Tecnologias Escolhidas:
 O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D. É importante ressaltar que todas as estruturas de dados e algoritmos fundamentais para as mecânicas do jogo serão implementados do zero, conforme os requisitos e o aprofundamento propostos pela disciplina.
