@@ -20,6 +20,12 @@ Esta é a forma mais direta de validar cada algoritmo. Ao selecionar a **opção
 * **Busca Binária:** Uma lista maior (simulando uma biblioteca de feitiços) é criada e ordenada. O usuário pode então buscar por uma carta para testemunhar a eficiência da busca binária, que encontra o resultado em poucas comparações.
 * **Rabin-Karp:** Um texto base é apresentado, e o usuário pode digitar uma "palavra-chave" para que o algoritmo encontre sua posição no texto.
 
+* **Hashing:**
+Esta funcao transforma um texto (string) em um numero unico (hash).
+
+* **Compressão de Dados:** (Huffman)
+Que ira pedir para o usuario escrever uma entrada, que sera comprimida e testada se a descompresao deu certo.
+
 ### 2. Integração no Jogo Funcional (Opção 1 do Menu)
 
 Para demonstrar a aplicação prática, a **Busca Sequencial** foi integrada diretamente no loop de combate do jogo.
@@ -47,7 +53,7 @@ O projeto foi desenvolvido em C++ e compilado com g++ (MinGW) no Windows.
 2.  **Navegar para a Pasta Raiz:** `cd /caminho/para/o/projeto/Arch`
 3.  **Compilar:**
     ```powershell
-    g++ src/main.cpp src/TestesModule.cpp src/game_logic/Card.cpp src/game_logic/Player.cpp src/game_logic/Inimigo.cpp src/game_logic/Game.cpp src/game_logic/CardLibrary.cpp src/algoritmos/Busca.cpp -I include -o ArchArcanum.exe -std=c++17
+    g++ src/main.cpp src/TestesModule.cpp src/game_logic/Card.cpp src/game_logic/Player.cpp src/game_logic/Inimigo.cpp src/game_logic/Game.cpp src/game_logic/CardLibrary.cpp src/algoritmos/Busca.cpp src/algoritmos/Huffman.cpp src/algoritmos/Hashing.cpp -I include -o ArchArcanum.exe -std=c++17
     ```
 4.  **Executar:**
     ```powershell
