@@ -1,25 +1,21 @@
 #include "../../include/algoritmos/Huffman.hpp"
 #include <iostream>
-#include <queue>   // Necessário para std::priority_queue
+#include <queue>   
 #include <vector>  
-#include <map>     // Necessário para std::map
+#include <map>    
 
-// Estrutura auxiliar para comparar os nós na fila de prioridade
 struct CompareNodes {
     bool operator()(Algoritmos::HuffmanNode* esq, Algoritmos::HuffmanNode* dir) {
         return esq->frequencia > dir->frequencia;
     }
 };
 
-//Implementação do Construtor do Nó
 Algoritmos::HuffmanNode::HuffmanNode(char data, unsigned frequencia) {
     this->data = data;
     this->frequencia = frequencia;
     this->esquerda = this->direita = nullptr;
 }
 
-
-//Implementação da Classe HuffmanArchiver
 
 Algoritmos::HuffmanArchiver::HuffmanArchiver() : raizDaArvore(nullptr) {}
 
@@ -44,7 +40,6 @@ void Algoritmos::HuffmanArchiver::construirArvore(const std::string& texto) {
         frequencias[c]++;
     }
 
-    // A std::priority_queue precisa saber sobre std::vector
     std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, CompareNodes> minHeap;
     for (auto par : frequencias) {
         minHeap.push(new HuffmanNode(par.first, par.second));

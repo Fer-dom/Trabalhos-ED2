@@ -81,7 +81,7 @@ void testarBuscaRabinKarp_Interativo() {
     std::cout << "\n--- DEMONSTRACAO: BUSCA RABIN-KARP ---\n";
     std::cout << "Esta busca encontra um trecho de texto dentro de um texto maior.\n";
 
-    std::string textoPrincipal = "O selo arcano se quebra quando a lua sangrenta ascender no ceu de opalas.";
+    std::string textoPrincipal = "O selo arcano se quebra quando a lua sangrenta ascender no ceu.";
     std::cout << "\nTexto base para a busca:\n\"" << textoPrincipal << "\"\n";
 
     std::string padraoBusca;
@@ -106,8 +106,6 @@ void TestModule::runAllTests() {
     testarBuscaSequencial_Interativo();
     testarBuscaBinaria_Interativo();
     testarBuscaRabinKarp_Interativo();
-
-    // As chamadas para Huffman e Hashing ficam de fora desta versão.
 
     std::cout << "\nRetornando ao menu principal...\n";
 }
