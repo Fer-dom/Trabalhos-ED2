@@ -78,9 +78,57 @@ void Game::processInput() {
     } else if (input == "desistir" || input == "menu") {
         isRunning = false;
     } else if (input == "analisar") {
-        // ... (lógica de análise com Rabin-Karp) ...
+        if (input == "analisar") {
+
+            std::cout << "Qual carta da sua mao voce quer analisar?\n>> ";
+            std::string nomeCarta;
+            std::getline(std::cin, nomeCarta);
+                Card* cartaParaAnalisar = Algoritmos::buscaSequencial(player->getMao(), nomeCarta);
+                if(cartaParaAnalisar) {
+                    std::cout << "Descricao da carta: \"" << cartaParaAnalisar->getDescription() << "\"\n";
+                    std::cout << "Qual palavra-chave voce quer procurar na descricao?\n>> ";
+                    std::string padrao;
+                    std::getline(std::cin, padrao);
+            Algoritmos::buscaRabinKarp(cartaParaAnalisar->getDescription(), padrao);
+                } else {
+                    std::cout << "Carta nao encontrada na sua mao.\n";
+                        }
+                std::cout << "Pressione Enter para continuar...";
+                std::cin.get();
+                return;
+}
     } else if (input == "verificar") {
-        // ... (lógica de verificação com Busca Binária) ...
+        if (input == "verificar") {
+     std::cout << "Verificar se uma carta existe no Grimorio completo do jogo.\n";
+     std::cout << "Digite o nome da carta a verificar:\n>> ";
+     std::string nomeCarta;
+     std::getline(std::cin, nomeCarta);
+
+        // Criamos uma biblioteca de cartas completa para a busca binária
+     CardLibrary libCompleta;
+     std::vector<Card*> grimorioCompleto;
+    grimorioCompleto.push_back(libCompleta.createCard("Raio Etereo"));
+    grimorioCompleto.push_back(libCompleta.createCard("Lanca do Vazio"));
+    grimorioCompleto.push_back(libCompleta.createCard("Barreira Runica"));
+    grimorioCompleto.push_back(libCompleta.createCard("Manto Espectral"));
+    grimorioCompleto.push_back(libCompleta.createCard("Toque Curativo"));
+    grimorioCompleto.push_back(libCompleta.createCard("Clarividencia"));
+    grimorioCompleto.push_back(libCompleta.createCard("Focar Mana"));
+
+
+        // A busca binária exige que a lista esteja ordenada
+     std::sort(grimorioCompleto.begin(), grimorioCompleto.end(), [](Card* a, Card* b){ return a->getName() < b->getName(); });
+     std::cout << "Procurando '" << nomeCarta << "' no grimorio completo...\n";
+    Algoritmos::buscaBinaria(grimorioCompleto, nomeCarta);
+
+
+        // Limpeza da memória do grimorio de test
+    for(auto c : grimorioCompleto) delete c;
+     std::cout << "Pressione Enter para continuar...";
+    std::cin.get();
+ return;
+
+}
     } else {
         Card* carta = Algoritmos::buscaSequencial(player->getMao(), input);
         if (carta) {
