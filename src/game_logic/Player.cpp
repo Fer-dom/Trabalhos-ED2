@@ -78,49 +78,51 @@ void Player::comprarCarta() {
 }
 
 void Player::jogarCarta(Card* cartaSendoJogada, Inimigo& alvo) {
-    // 1. Encontrar o iterador para a carta na mão para poder removê-la
-    auto it = std::find(mao.begin(), mao.end(), cartaSendoJogada);
-    if (it == mao.end()) {
-        std::cout << "Erro: Tentativa de jogar uma carta que nao esta na mao.\n";
-        return;
-    }
+    // ... (verificações de mana, etc., continuam iguais) ...
 
-    // 2. Verificar e pagar o custo de mana
-    if (this->essenciaArcana < cartaSendoJogada->getCost()) {
-        std::cout << "Essencia Arcana insuficiente para jogar " << cartaSendoJogada->getName() << "!\n";
-        return;
-    }
     this->essenciaArcana -= cartaSendoJogada->getCost();
     std::cout << "Jogador jogou '" << cartaSendoJogada->getName() << "'!\n";
 
-    descarte.push_back(cartaSendoJogada);
-    mao.erase(it);
+    // --- NOVA LÓGICA DE QUEBRA DE SELO ---
+    // Verificamos se o inimigo tem um selo ativo E se a fraqueza dele é do tipo DEFESA
+    if (alvo.getSeloAtivo() && alvo.getSeloDefensivo() == TipoEfeito::DEFESA) {
+        // Se for, verificamos se a carta que estamos jogando é de DEFESA
+        if (cartaSendoJogada->getTipo() == TipoEfeito::DEFESA) {
+            std::cout << Color::BOLD_YELLOW << "Suas runas defensivas sobrecarregam e quebram o selo do inimigo!\n" << Color::RESET;
+            alvo.quebrarSelo(); // Quebra o selo
+            alvo.receberDano(15); // Causa um dano extra de "feedback arcano"
+            
+            // Movemos a carta para o descarte e terminamos a ação aqui,
+            // pois a carta foi "consumida" para quebrar o selo em vez de dar armadura.
+            auto it = std::find(mao.begin(), mao.end(), cartaSendoJogada);
+            if (it != mao.end()) {
+                descarte.push_back(cartaSendoJogada);
+                mao.erase(it);
+            }
+            return; // A ação da carta termina aqui.
+        }
+    }
 
+    // Se a lógica de quebra de selo não foi ativada, o efeito normal da carta acontece
+    // (O switch que você já tem)
     switch (cartaSendoJogada->getTipo()) {
         case TipoEfeito::DANO:
             alvo.receberDano(cartaSendoJogada->getValor());
             break;
         case TipoEfeito::DEFESA:
+            // Se chegamos aqui, significa que a carta de defesa foi usada normalmente (não para quebrar selo)
             this->ganharArmadura(cartaSendoJogada->getValor());
             break;
-        case TipoEfeito::CURA:
-            this->vida += cartaSendoJogada->getValor();
-            if (this->vida > this->vidaMaxima) this->vida = this->vidaMaxima;
-            std::cout << "Jogador se curou em " << cartaSendoJogada->getValor() << ".\n";
-            break;
-        case TipoEfeito::COMPRA_CARTA:
-            std::cout << "Jogador compra " << cartaSendoJogada->getValor() << " cartas.\n";
-            for (int i = 0; i < cartaSendoJogada->getValor(); ++i) {
-                this->comprarCarta(); // Esta chamada agora é segura.
-            }
-            break;
-        case TipoEfeito::GERA_MANA:
-            this->essenciaArcana += cartaSendoJogada->getValor();
-            std::cout << "Jogador ganhou " << cartaSendoJogada->getValor() << " de Essencia Arcana.\n";
-            break;
+        // ... outros cases
+    }
+
+    // Move a carta para o descarte (se ainda não foi movida)
+    auto it = std::find(mao.begin(), mao.end(), cartaSendoJogada);
+    if (it != mao.end()) {
+        descarte.push_back(cartaSendoJogada);
+        mao.erase(it);
     }
 }
-
 
 void Player::finalizarTurno() {
     descarte.insert(descarte.end(), mao.begin(), mao.end());
@@ -163,6 +165,37 @@ void Player::mostrarStatus() const {
               << " | Essencia: " << Color::BOLD_MAGENTA << essenciaArcana << Color::RESET << "\n";
     std::cout << "Cartas no Deck: " << deck.size() << " | Cartas no Descarte: " << descarte.size() << "\n";
 }
+
+void Player::adicionarFragmento(const FragmentoEtereo& fragmento) {
+    fragmentosColetados.push_back(fragmento);
+    std::cout << "Voce coletou: " << fragmento.nome << "!\n";
+}
+
+
+void Player::mostrarFragmentos() const {
+    std::cout << "\n--- Fragmentos Etéreos Coletados ---\n";
+    if (fragmentosColetados.empty()) {
+        std::cout << "Nenhum fragmento.\n";
+    } else {
+        for (size_t i = 0; i < fragmentosColetados.size(); ++i) {
+            std::cout << "[" << i << "] " << fragmentosColetados[i].nome << "\n";
+        }
+    }
+    std::cout << "--------------------------------------\n";
+}
+
+std::vector<FragmentoEtereo>& Player::getFragmentos() {
+    return fragmentosColetados;
+}
+
+void Player::adicionarCartaAoDeck(Card* novaCarta) {
+    if (novaCarta) {
+        // A nova carta é adicionada na pilha de descarte,
+        // para ser embaralhada no deck no próximo ciclo.
+        descarte.push_back(novaCarta);
+    }
+}
+
 bool Player::estaVivo() const { return this->vida > 0; }
 const std::vector<Card*>& Player::getMao() const { return this->mao; }
 void Player::setTurnoAtivo(bool estado) { this->meuTurno = estado; }

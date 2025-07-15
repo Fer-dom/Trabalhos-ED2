@@ -1,44 +1,41 @@
 #pragma once
 
 #include <string>
+#include "Card.hpp" 
+
+enum class TipoInimigo {
+    GOBLIN,
+    GOLEM_RUNICO
+};
 
 class Player;
 
 class Inimigo {
 public:
-    // Construtor: Cria um inimigo com seus status.
-    Inimigo(const std::string& nome, int vidaInicial);
+    Inimigo(const std::string& nome, int vidaInicial, TipoInimigo tipo);
 
-
-    /**
-    Aplica dano ao inimigo, reduzindo sua vida.
-     */
+    // Métodos públicos
     void receberDano(int quantidade);
-
     void mostrarStatus() const;
-
-    /**
-    Define o que o inimigo planeja fazer no seu próximo turno.
-     */
     void planejarAcao();
-
-    /**
-     Executa a ação que foi planejada contra um alvo.
-     alvo O jogador que sofrerá a ação.
-     */
     void realizarAcao(Player& alvo);
+    void quebrarSelo();
 
-
+    // Getters
     std::string getNome() const;
     int getVida() const;
     int getVidaMaxima() const;
     int getDanoIntencao() const;
-
     bool estaVivo() const;
+    bool getSeloAtivo() const; 
+    TipoEfeito getSeloDefensivo() const; 
 
 private:
     std::string nome;
     int vida;
     int vidaMaxima;
     int danoDaProximaAcao;
+    TipoInimigo tipo; 
+    TipoEfeito seloDefensivo;
+    bool seloAtivo;
 };
