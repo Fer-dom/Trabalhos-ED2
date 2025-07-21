@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Projeto de Estrutura de Dados - Arch Arcanum (Etapa 1: Algoritmos de Busca)
 
 **Autor:** Fernando Rezende Domingues
