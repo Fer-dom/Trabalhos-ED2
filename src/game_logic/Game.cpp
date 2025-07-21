@@ -39,10 +39,10 @@ void Game::gameLoop() {
         if (currentState == GameState::IN_COMBAT) {
             render();
             if (player->getTurnoAtivo()) {
-                // CORRIGIDO: Chamando o nome correto da função
+            
                 processInput();
             } else {
-                // CORRIGIDO: Chamando o nome correto da função
+                
                 update();
             }
         } else if (currentState == GameState::POST_COMBAT) {
@@ -104,7 +104,7 @@ void Game::processInput() {
      std::string nomeCarta;
      std::getline(std::cin, nomeCarta);
 
-        // Criamos uma biblioteca de cartas completa para a busca binária
+        //Biblioteca de cartas completa para a busca binária
      CardLibrary libCompleta;
      std::vector<Card*> grimorioCompleto;
     grimorioCompleto.push_back(libCompleta.createCard("Raio Etereo"));
@@ -148,7 +148,7 @@ void Game::update() {
 }
 
 void Game::render() {
-    // Truque para "limpar" a tela do console
+    // Truque para limpar a tela do console
     #ifdef _WIN32
         system("cls");
     #else
