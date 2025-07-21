@@ -106,4 +106,3 @@ Mochila 0/1 (Módulo "Configuração do Grimório Pessoal"): Seu "Grimório Pess
 
 4. Tecnologias Escolhidas:
 O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D.
->>>>>>> 71ded6896b644df3cec5d96159baf7f9ed84c348
