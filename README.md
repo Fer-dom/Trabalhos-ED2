@@ -105,4 +105,7 @@ Foca no "Deckbuilding" — a montagem do seu grimório.
 Mochila 0/1 (Módulo "Configuração do Grimório Pessoal"): Seu "Grimório Pessoal" tem uma capacidade de páginas limitadas (ou "peso arcano"). Cada carta (feitiço) que você possui na sua coleção tem um custo de páginas e um nível de poder mágico. Antes de iniciar uma desventura, você deve escolher quais feitiços da sua coleção total irão para o grimório que você usará. Você não pode exceder o limite de páginas do seu grimório. O jogo terá um botão de "Otimizar Grimório", que usará o algoritmo da Mochila 0/1 para selecionar o conjunto de feitiços que oferece o maior "nível de poder mágico" total sem ultrapassar a capacidade. Isso é uma integração perfeita e extremamente temática para um mago.
 
 4. Tecnologias Escolhidas:
+
+O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D.
+=======
 O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D.
