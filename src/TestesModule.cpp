@@ -133,31 +133,56 @@ void testarHuffman_Interativo() {
 }
 
 void testarHashing_Interativo() {
-    std::cout << "\n\n--- DEMONSTRACAO: HASHING POR DOBRAMENTO (FOLDING) ---\n";
-    std::cout << "Esta tecnica quebra uma chave grande em pedacos e os combina para gerar o hash.\n";
-
-    int tamanhoDoPedaco;
-    std::cout << "\nPrimeiro, defina o tamanho de cada 'pedaco' para o dobramento (ex: 3 ou 4):\n>> ";
-    std::cin >> tamanhoDoPedaco;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-    if (tamanhoDoPedaco <= 0) {
-        tamanhoDoPedaco = 4;
-    }
-
+    int opcao;
     std::string textoEntrada;
-    while (true) {
-        std::cout << "\nDigite um texto para gerar o hash (ou 'sair' para voltar):\n>> ";
-        std::getline(std::cin, textoEntrada);
+    int tamanhoDoPedaco = 4; // Um valor padrão razoável
 
-        if (textoEntrada == "sair") break;
-        unsigned long hashDeslocado = Algoritmos::shiftFoldingHash(textoEntrada, tamanhoDoPedaco);
-        std::cout << "  [Enlaceamento Deslocado] Hash: " 
-                  << Color::BOLD_YELLOW << hashDeslocado << Color::RESET << "\n";
-        unsigned long hashLimite = Algoritmos::boundaryFoldingHash(textoEntrada, tamanhoDoPedaco);
-        std::cout << "  [Enlaceamento Limite] Hash (com inversao): " 
-                  << Color::BOLD_CYAN << hashLimite << Color::RESET << "\n";
-    }
+    do {
+        std::cout << "\n\n--- DEMONSTRACAO: HASHING POR DOBRAMENTO (FOLDING) ---\n";
+        std::cout << "Escolha a tecnica que deseja demonstrar:\n";
+        std::cout << "1. Enlaceamento Deslocado (Shift Folding)\n";
+        std::cout << "2. Enlaceamento Limite (Boundary Folding)\n";
+        std::cout << "0. Voltar ao menu de testes\n";
+        std::cout << "======================================================\n>> ";
+
+        std::string input;
+        std::getline(std::cin >> std::ws, input);
+        try {
+            opcao = std::stoi(input);
+        } catch (const std::exception& e) {
+            opcao = -1;
+        }
+
+        if (opcao == 1 || opcao == 2) {
+            std::cout << "\nDigite um texto para gerar o hash (ex: 'Arch Arcanum'):\n>> ";
+            std::getline(std::cin, textoEntrada);
+        }
+
+        switch(opcao) {
+            case 1: {
+                std::cout << "\nCalculando com Enlaceamento Deslocado...\n";
+                unsigned long hashGerado = Algoritmos::shiftFoldingHash(textoEntrada, tamanhoDoPedaco);
+                std::cout << "  >> O Hash para '" << textoEntrada << "' e: " << Color::BOLD_YELLOW << hashGerado << Color::RESET << "\n";
+                std::cout << "Pressione Enter para continuar...";
+                std::cin.get();
+                break;
+            }
+            case 2: {
+                std::cout << "\nCalculando com Enlaceamento Limite...\n";
+                unsigned long hashGerado = Algoritmos::boundaryFoldingHash(textoEntrada, tamanhoDoPedaco);
+                std::cout << "  >> O Hash para '" << textoEntrada << "' e: " << Color::BOLD_CYAN << hashGerado << Color::RESET << "\n";
+                std::cout << "Pressione Enter para continuar...";
+                std::cin.get();
+                break;
+            }
+            case 0:
+                std::cout << "Retornando...\n";
+                break;
+            default:
+                std::cout << "Opcao invalida.\n";
+                break;
+        }
+    } while (opcao != 0);
 }
 
 void TestModule::runAllTests() {
