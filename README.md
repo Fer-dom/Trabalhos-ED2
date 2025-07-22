@@ -52,15 +52,28 @@ O projeto foi desenvolvido em C++ e compilado com g++ (MinGW-w64) no Windows.
 
 ---
 
-## 4. Visão de Design (Próximas Etapas)
+## 4. Análise de Complexidade (Big O)
 
-O documento de design original (que pode ser encontrado no histórico do Git) estabelece uma visão ambiciosa para o futuro do "Arch Arcanum", integrando todos os tópicos da ementa da disciplina. As próximas etapas planejadas incluem:
+A tabela abaixo resume a eficiência de cada algoritmo implementado e sua aplicação prática no projeto, conforme observado nos testes.
+
+| Algoritmo                 | Complexidade de Tempo (Pior Caso) | Eficiência e Contexto no Jogo                                                                                                       |
+| :------------------------ | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
+| **Busca Sequencial** | $$O(N)$$                            | **Mão do jogador:** Perfeitamente eficiente para um número pequeno e variável de itens (5-10 cartas).                               |
+| **Busca Binária** | $$O(\log N)$$                       | **Biblioteca/Grimório:** Performance superior para coleções grandes e estáticas que podem ser mantidas em ordem.                      |
+| **Rabin-Karp** | $$O(N \cdot M)$$                    | **Pesquisa textual:** Muito rápido no caso médio ($$O(N+M)$$), ideal para encontrar padrões em descrições de cartas.                 |
+| **Huffman** | $$O(N \log K)$$                     | **Sistema de Recompensa:** Demonstra excelente taxa de compressão. O custo de construir a árvore é adequado para uma ação fora do combate. |
+| **Hashing (Dobramento)** | $$O(L)$$                            | **Geração de Hash:** Instantâneo. O tempo depende apenas do tamanho da string de entrada (`L`), não do tamanho da tabela hash.            |
+
+---
+
+## 5. Visão de Design (Próximas Etapas)
+
+O documento de design original estabelece uma visão ambiciosa para o futuro do "Arch Arcanum", integrando todos os tópicos da ementa da disciplina. As próximas etapas planejadas incluem:
 
 * **Grafos (O Mapa do Vazio):** Implementar o mapa do jogo como um grafo, onde o jogador navega entre os nós (combates, eventos, lojas) usando algoritmos como Dijkstra ou A* para encontrar o caminho mais seguro.
-* **Teoria da Complexidade (NP-Difícil):** Criar um minigame baseado no Problema do Caixeiro Viajante para desativar "Nexos de Energia Caótica".
-* **Algoritmos Gulosos e Programação Dinâmica:** Usar os conceitos da Mochila (0/1 e Fracionária) para otimizar as escolhas do jogador, tanto na montagem do grimório antes da batalha quanto nas jogadas durante o combate.
+* **Teoria da Complexidade (NP-Difícil):** Criar um minigame baseado no Problema do Caixeiro Viajante.
+* **Algoritmos Gulosos e Programação Dinâmica:** Usar os conceitos da Mochila (0/1 e Fracionária) para otimizar as escolhas do jogador.
 * **Tecnologias:** Migrar a interface de console para uma biblioteca gráfica como a **SFML**, trazendo o jogo para a vida com elementos visuais.
-
 =======
 # Trabalhos-ED2
 Projeto de ED2 - Parte 1: Documento de Design -
@@ -107,7 +120,7 @@ Foca no "Deckbuilding" — a montagem do seu grimório.
 
 Mochila 0/1 (Módulo "Configuração do Grimório Pessoal"): Seu "Grimório Pessoal" tem uma capacidade de páginas limitadas (ou "peso arcano"). Cada carta (feitiço) que você possui na sua coleção tem um custo de páginas e um nível de poder mágico. Antes de iniciar uma desventura, você deve escolher quais feitiços da sua coleção total irão para o grimório que você usará. Você não pode exceder o limite de páginas do seu grimório. O jogo terá um botão de "Otimizar Grimório", que usará o algoritmo da Mochila 0/1 para selecionar o conjunto de feitiços que oferece o maior "nível de poder mágico" total sem ultrapassar a capacidade. Isso é uma integração perfeita e extremamente temática para um mago.
 
-4. Tecnologias Escolhidas:
+Tecnologias Escolhidas:
 
 O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D.
 =======
