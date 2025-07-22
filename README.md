@@ -1,71 +1,66 @@
-# Projeto de Estrutura de Dados - Arch Arcanum (Etapa 1: Algoritmos de Busca)
-
+# Arch Arcanum - Projeto de Estrutura de Dados
+Projeto de ED2 - Parte 2
 **Autor:** Fernando Rezende Domingues
 **Matrícula:** 32321BSI022
 
-## Visão Geral da Entrega
+## 1. Visão Geral do Projeto
 
-Este projeto implementa os algoritmos de busca **Sequencial, Binária e Rabin-Karp** dentro da estrutura de um jogo de RPG no estilo roguelike deck-builder. O objetivo é demonstrar não apenas a implementação correta dos algoritmos, mas também sua aplicação prática em diferentes contextos de um software funcional.
+O "Arch Arcanum" é um jogo do gênero roguelike deckbuilder com temática de fantasia arcana. O jogador assume o papel de um Arcanista que explora o perigoso Vazio Proibido, usando um grimório de feitiços para enfrentar seus desafios.
 
-## Como Testar e Demonstrar
+Este repositório documenta a implementação do projeto para a disciplina de Estruturas de Dados, focado na aplicação prática de algoritmos em um software funcional e interativo.
 
-O programa oferece duas formas principais de demonstrar os algoritmos de busca:
+---
 
-### 1. Módulo de Testes Isolados (Opção 2 do Menu)
+## 2. Funcionalidades Implementadas (Etapa Atual)
 
-Esta é a forma mais direta de validar cada algoritmo. Ao selecionar a **opção 2**, o programa iniciará uma série de demonstrações interativas:
+A versão atual do projeto contém a base funcional do jogo e a implementação completa dos seguintes algoritmos, todos demonstrados de forma interativa:
 
-* **Busca Sequencial:** Uma lista pequena e desordenada (simulando a mão de um jogador) é apresentada. O usuário pode digitar o nome de uma carta para ver o algoritmo percorrer a lista item por item.
-* **Busca Binária:** Uma lista maior (simulando uma biblioteca de feitiços) é criada e ordenada. O usuário pode então buscar por uma carta para testemunhar a eficiência da busca binária, que encontra o resultado em poucas comparações.
-* **Rabin-Karp:** Um texto base é apresentado, e o usuário pode digitar uma "palavra-chave" para que o algoritmo encontre sua posição no texto.
+* **Algoritmos de Busca:**
+    * Busca Sequencial
+    * Busca Binária
+    * Busca por Texto (Rabin-Karp)
 
-### Compressão (Huffman)
+* **Algoritmo de Compressão:**
+    * Huffman (com compressão e descompressão)
 
-* **Implementação:** A lógica foi encapsulada na classe `HuffmanArchiver`, que gerencia a construção da árvore de Huffman, a geração de códigos, e os processos de compressão e descompressão. A memória é gerenciada automaticamente pelo destrutor da classe.
-* **Integração:** A demonstração interativa ("Purificação de Fragmentos") permite ao usuário digitar um texto, ver o resultado comprimido, a taxa de compressão, e depois verificar a integridade dos dados ao colar a string de bits para descompressão. No jogo, isso se manifesta como um sistema de recompensa pós-batalha.
+* **Algoritmos de Hashing:**
+    * Hashing por Dobramento (Enlaceamento Deslocado e Enlaceamento Limite)
 
-### Hashing (Dobramento)
+* **Loop de Jogo Funcional:**
+    * Um sistema de combate por turnos onde o jogador pode usar cartas de um baralho para atacar, defender e se curar contra um inimigo com IA básica.
+    * Um sistema de recompensa pós-batalha que utiliza a compressão de Huffman.
 
-* **Implementação:** Foram implementadas as duas técnicas solicitadas: **Enlaceamento Deslocado (Shift Folding)** e **Enlaceamento Limite (Boundary Folding)**. Ambas as funções quebram uma string em pedaços de tamanho definido pelo usuário e combinam seus valores.
-* **Integração:** O teste interativo (`Demonstracao de Hashing por Dobramento`) permite ao usuário definir o tamanho dos "pedaços" e fornecer uma string, e o programa exibe os hashes gerados por ambas as técnicas, permitindo uma comparação direta. Conceitualmente, isso serve de base para o sistema de fraquezas elementais do jogo.
+---
 
-## Análise de Complexidade e Eficiência
+## 3. Como Compilar e Executar
 
-| Algoritmo | Complexidade de Tempo (Pior Caso) | Eficiência Observada nos Testes |
-| :--- | :--- | :--- |
-| **Busca Sequencial** | $$O(N)$$ | Rápido para listas pequenas, mas o número de comparações cresce linearmente com o tamanho da lista. |
-| **Busca Binária** | $$O(\log N)$$ | Extremamente rápido. Mesmo para listas maiores, encontra o resultado em pouquíssimas comparações. |
-| **Rabin-Karp** | $$O(N \cdot M)$$ | Rápido no caso médio ($$O(N+M)$$). Encontra substrings em textos de forma eficiente e instantânea para o usuário. |
-| **Huffman** | $$O(N \log K)$$ | Demonstra excelente taxa de compressão para textos com caracteres repetidos. O custo de construir a árvore é notável, mas a descompressão é rápida. |
-| **Hashing (Dobramento)** | $$O(L)$$ | Praticamente instantâneo. O tempo de execução depende apenas do tamanho da string de entrada, não do tamanho da tabela hash. |
+O projeto foi desenvolvido em C++ e compilado com g++ (MinGW-w64) no Windows.
 
-## Análise de Complexidade (Big O)
-
-A tabela abaixo resume a eficiência de cada algoritmo de busca implementado.
-
-| Algoritmo        | Complexidade de Tempo (Pior Caso) | Aplicação e Contexto no Jogo                                                              |
-| :--------------- | :----------------------------------- | :------------------------------------------------------------------------------------------- |
-| **Busca Sequencial** | $$O(N)$$                            | **Mão do jogador:** Ideal para um número pequeno e variável de itens que não precisam de ordenação. |
-| **Busca Binária** | $$O(\log N)$$                       | **Biblioteca/Grimório:** Performance superior para coleções grandes e estáticas que podem ser mantidas em ordem. |
-| **Rabin-Karp** | $$O(N \cdot M)$$                    | **Pesquisa textual:** Ferramenta especializada para encontrar padrões em descrições de cartas ou lore do jogo. |
-| **Huffman** | $$O(N \log K)$$ | Demonstra excelente taxa de compressão para textos com caracteres repetidos. O custo de construir a árvore é notável, mas a descompressão é rápida. |
-| **Hashing (Dobramento)** | $$O(L)$$ | Praticamente instantâneo. O tempo de execução depende apenas do tamanho da string de entrada, não do tamanho da tabela hash. |
-
-
-## Como Compilar e Executar
-
-O projeto foi desenvolvido em C++ e compilado com g++ (MinGW) no Windows.
-
-1.  **Pré-requisito:** Compilador g++ configurado no PATH do sistema.
-2.  **Navegar para a Pasta Raiz:** `cd /caminho/para/o/projeto/Arch`
-3.  **Compilar:**
+1.  **Pré-requisito:** Um compilador C++ moderno (padrão C++17) configurado no PATH do sistema.
+2.  **Navegar para a Pasta Raiz:** Abra um terminal e navegue para a pasta principal do projeto (`Arch`).
+3.  **Compilar:** Execute o seguinte comando para compilar todos os arquivos-fonte.
     ```powershell
-    g++ src/main.cpp src/TestesModule.cpp src/game_logic/Card.cpp src/game_logic/Player.cpp src/game_logic/Inimigo.cpp src/game_logic/Game.cpp src/game_logic/CardLibrary.cpp src/algoritmos/Busca.cpp src/algoritmos/Huffman.cpp src/algoritmos/Hashing.cpp -I include -o ArchArcanum.exe -std=c++17
+    g++ src/main.cpp src/TestesModule.cpp src/game_logic/*.cpp src/algoritmos/*.cpp -I include -o ArchArcanum.exe -std=c++17
     ```
 4.  **Executar:**
     ```powershell
     ./ArchArcanum.exe
     ```
+5.  **Navegue pelo Menu:**
+    * **Opção 1 (Iniciar Jogo):** Inicia o loop de combate interativo.
+    * **Opção 2 (Executar Testes):** Abre um submenu para demonstrar cada algoritmo de forma isolada e interativa.
+
+---
+
+## 4. Visão de Design (Próximas Etapas)
+
+O documento de design original (que pode ser encontrado no histórico do Git) estabelece uma visão ambiciosa para o futuro do "Arch Arcanum", integrando todos os tópicos da ementa da disciplina. As próximas etapas planejadas incluem:
+
+* **Grafos (O Mapa do Vazio):** Implementar o mapa do jogo como um grafo, onde o jogador navega entre os nós (combates, eventos, lojas) usando algoritmos como Dijkstra ou A* para encontrar o caminho mais seguro.
+* **Teoria da Complexidade (NP-Difícil):** Criar um minigame baseado no Problema do Caixeiro Viajante para desativar "Nexos de Energia Caótica".
+* **Algoritmos Gulosos e Programação Dinâmica:** Usar os conceitos da Mochila (0/1 e Fracionária) para otimizar as escolhas do jogador, tanto na montagem do grimório antes da batalha quanto nas jogadas durante o combate.
+* **Tecnologias:** Migrar a interface de console para uma biblioteca gráfica como a **SFML**, trazendo o jogo para a vida com elementos visuais.
+
 =======
 # Trabalhos-ED2
 Projeto de ED2 - Parte 1: Documento de Design -
@@ -116,4 +111,3 @@ Mochila 0/1 (Módulo "Configuração do Grimório Pessoal"): Seu "Grimório Pess
 
 O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D.
 =======
-O projeto será desenvolvido em C++, uma linguagem robusta e performática ideal para jogos. Para a renderização gráfica, gerenciamento de janelas e entrada do usuário, utilizarei a biblioteca multimídia SFML (Simple and Fast Multimedia Library), que é orientada a objetos e adequada para projetos 2D.
