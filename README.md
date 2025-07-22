@@ -19,19 +19,25 @@ Esta é a forma mais direta de validar cada algoritmo. Ao selecionar a **opção
 * **Busca Binária:** Uma lista maior (simulando uma biblioteca de feitiços) é criada e ordenada. O usuário pode então buscar por uma carta para testemunhar a eficiência da busca binária, que encontra o resultado em poucas comparações.
 * **Rabin-Karp:** Um texto base é apresentado, e o usuário pode digitar uma "palavra-chave" para que o algoritmo encontre sua posição no texto.
 
-* **Hashing:**
-Esta funcao transforma um texto (string) em um numero unico (hash).
+### Compressão (Huffman)
 
-* **Compressão de Dados:** (Huffman)
-Que ira pedir para o usuario escrever uma entrada, que sera comprimida e testada se a descompresao deu certo.
+* **Implementação:** A lógica foi encapsulada na classe `HuffmanArchiver`, que gerencia a construção da árvore de Huffman, a geração de códigos, e os processos de compressão e descompressão. A memória é gerenciada automaticamente pelo destrutor da classe.
+* **Integração:** A demonstração interativa ("Purificação de Fragmentos") permite ao usuário digitar um texto, ver o resultado comprimido, a taxa de compressão, e depois verificar a integridade dos dados ao colar a string de bits para descompressão. No jogo, isso se manifesta como um sistema de recompensa pós-batalha.
 
-### 2. Integração no Jogo Funcional (Opção 1 do Menu)
+### Hashing (Dobramento)
 
-Para demonstrar a aplicação prática, a **Busca Sequencial** foi integrada diretamente no loop de combate do jogo.
+* **Implementação:** Foram implementadas as duas técnicas solicitadas: **Enlaceamento Deslocado (Shift Folding)** e **Enlaceamento Limite (Boundary Folding)**. Ambas as funções quebram uma string em pedaços de tamanho definido pelo usuário e combinam seus valores.
+* **Integração:** O teste interativo (`Demonstracao de Hashing por Dobramento`) permite ao usuário definir o tamanho dos "pedaços" e fornecer uma string, e o programa exibe os hashes gerados por ambas as técnicas, permitindo uma comparação direta. Conceitualmente, isso serve de base para o sistema de fraquezas elementais do jogo.
 
-* Ao selecionar a **opção 1**, um combate se inicia.
-* No turno do jogador, a sua mão de cartas é exibida.
-* Ao digitar o nome de uma das cartas da mão (e.g., "Raio Etereo"), o sistema utiliza a **Busca Sequencial** para localizar a carta no vetor da mão e aplicar seu efeito no jogo.
+## Análise de Complexidade e Eficiência
+
+| Algoritmo | Complexidade de Tempo (Pior Caso) | Eficiência Observada nos Testes |
+| :--- | :--- | :--- |
+| **Busca Sequencial** | $$O(N)$$ | Rápido para listas pequenas, mas o número de comparações cresce linearmente com o tamanho da lista. |
+| **Busca Binária** | $$O(\log N)$$ | Extremamente rápido. Mesmo para listas maiores, encontra o resultado em pouquíssimas comparações. |
+| **Rabin-Karp** | $$O(N \cdot M)$$ | Rápido no caso médio ($$O(N+M)$$). Encontra substrings em textos de forma eficiente e instantânea para o usuário. |
+| **Huffman** | $$O(N \log K)$$ | Demonstra excelente taxa de compressão para textos com caracteres repetidos. O custo de construir a árvore é notável, mas a descompressão é rápida. |
+| **Hashing (Dobramento)** | $$O(L)$$ | Praticamente instantâneo. O tempo de execução depende apenas do tamanho da string de entrada, não do tamanho da tabela hash. |
 
 ## Análise de Complexidade (Big O)
 
@@ -42,6 +48,8 @@ A tabela abaixo resume a eficiência de cada algoritmo de busca implementado.
 | **Busca Sequencial** | $$O(N)$$                            | **Mão do jogador:** Ideal para um número pequeno e variável de itens que não precisam de ordenação. |
 | **Busca Binária** | $$O(\log N)$$                       | **Biblioteca/Grimório:** Performance superior para coleções grandes e estáticas que podem ser mantidas em ordem. |
 | **Rabin-Karp** | $$O(N \cdot M)$$                    | **Pesquisa textual:** Ferramenta especializada para encontrar padrões em descrições de cartas ou lore do jogo. |
+| **Huffman** | $$O(N \log K)$$ | Demonstra excelente taxa de compressão para textos com caracteres repetidos. O custo de construir a árvore é notável, mas a descompressão é rápida. |
+| **Hashing (Dobramento)** | $$O(L)$$ | Praticamente instantâneo. O tempo de execução depende apenas do tamanho da string de entrada, não do tamanho da tabela hash. |
 
 
 ## Como Compilar e Executar
