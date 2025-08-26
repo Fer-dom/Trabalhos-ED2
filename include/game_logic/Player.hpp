@@ -36,18 +36,17 @@ public:
     int ajustarDanoRecebido(int base) const; 
     void addRelic(const Relic& r); 
     void onStartTurn_Relics();  
-    void onPlayDefense_Relics();          
-    const StatusMap& getStatus() const { return statusAtivos; } 
-    const std::vector<Card*>& getMao() const;
-    const std::vector<Relic>& getRelics() const { return reliquias; } 
-    std::vector<FragmentoEtereo>& getFragmentos();
-
+    void onPlayDefense_Relics();
     void addMana(int qtd);           
     int  getMana() const;            
     void addBlock(int qtd);          
     void increaseMaxHP(int qtd);     
     void heal(int qtd);              
-    void takeDamage(int qtd);        
+    void takeDamage(int qtd);           
+    const StatusMap& getStatus() const { return statusAtivos; } 
+    const std::vector<Card*>& getMao() const;
+    const std::vector<Relic>& getRelics() const { return reliquias; } 
+    std::vector<FragmentoEtereo>& getFragmentos();     
 
 private:
     

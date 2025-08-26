@@ -78,7 +78,6 @@ void Player::comprarCarta() {
 }
 
 void Player::jogarCarta(Card* cartaSendoJogada, Inimigo& alvo) {
-    // ... (verificações de mana, etc., continuam iguais) ...
 
     this->essenciaArcana -= cartaSendoJogada->getCost();
     std::cout << "Jogador jogou '" << cartaSendoJogada->getName() << "'!\n";
@@ -210,6 +209,32 @@ int Player::ajustarDanoRecebido(int base) const {
 void Player::adicionarFragmento(const FragmentoEtereo& fragmento) {
     fragmentosColetados.push_back(fragmento);
     std::cout << "Voce coletou: " << fragmento.nome << "!\n";
+}
+
+void Player::addMana(int qtd) {
+    essenciaArcana += qtd;
+    if (essenciaArcana < 0) essenciaArcana = 0;
+}
+
+int Player::getMana() const {
+    return essenciaArcana;
+}
+
+void Player::addBlock(int qtd) {
+    ganharArmadura(qtd); 
+}
+
+void Player::increaseMaxHP(int qtd) {
+    vidaMaxima += qtd;
+    if (vida > vidaMaxima) vida = vidaMaxima;
+}
+
+void Player::heal(int qtd) {
+    curar(qtd); 
+}
+
+void Player::takeDamage(int qtd) {
+    receberDano(qtd);
 }
 
 void Player::addRelic(const Relic& r) { 
