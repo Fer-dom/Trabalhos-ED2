@@ -30,7 +30,7 @@ void Inimigo::planejarAcao() {
             this->danoDaProximaAcao = 8;
             break;
         case TipoInimigo::GOLEM_RUNICO:
-            // O Golem tem um ataque mais forte, mas talvez mais lento.
+            // O Golem tem um ataque mais forte.
             this->danoDaProximaAcao = 15;
             break;
     }

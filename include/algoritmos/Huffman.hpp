@@ -8,7 +8,7 @@ namespace Algoritmos {
 
     struct HuffmanNode {
         char data;               
-        unsigned frequencia;       // A frequência do caractere.
+        unsigned frequencia;   
         HuffmanNode *esquerda, *direita; 
         HuffmanNode(char data, unsigned frequencia);
     };

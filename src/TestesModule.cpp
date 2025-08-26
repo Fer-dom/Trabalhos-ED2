@@ -376,7 +376,6 @@ void TestModule::testarGrafo_Modulo3_Coloring() {
 
     std::cout << "Resultado da Coloracao:\n";
     for (const auto& par : cores) {
-        // Usando std::setw para alinhar a saída
         std::cout << "  - Regiao: " << std::left << std::setw(10) << par.first 
                   << " \tCor: " << par.second << std::endl;
     }

@@ -145,4 +145,4 @@ Gulosos: estratégias rápidas no turno (mochila fracionária, escalonamento).
 
 Dinâmica: mochila 0/1 para otimizar grimório antes da aventura.
 
-Interface Gráfica: migrar do console para SFML
+Interface Gráfica: migrar do console para SFML.
