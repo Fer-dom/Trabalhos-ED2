@@ -20,7 +20,6 @@ int Card::getValor() const { return this->valor; }
 
 
 void Card::display() const {
-    // Exibe os detalhes da carta no console
     std::cout << "--- " << this->name << " (Custo: " << this->cost << ") ---\n";
     std::cout << "    " << this->description << " (Valor: " << this->valor << ")\n";
 }

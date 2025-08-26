@@ -1,7 +1,6 @@
-#include "../../include/algoritmos/Busca.hpp" // Inclui o "contrato" que definimos acima
-#include <iostream> // Para usar std::cout nos logs de teste
+#include "../../include/algoritmos/Busca.hpp"
+#include <iostream> 
 
-// --- Implementação da Busca Sequencial ---
 Card* Algoritmos::buscaSequencial(const std::vector<Card*>& colecao, const std::string& nomeAlvo) {
     int comparacoes = 0;
     for (Card* carta : colecao) {
@@ -15,7 +14,6 @@ Card* Algoritmos::buscaSequencial(const std::vector<Card*>& colecao, const std::
     return nullptr;
 }
 
-// --- Implementação da Busca Binária ---
 Card* Algoritmos::buscaBinaria(const std::vector<Card*>& colecaoOrdenada, const std::string& nomeAlvo) {
     int esquerda = 0;
     int direita = colecaoOrdenada.size() - 1;
@@ -40,35 +38,28 @@ Card* Algoritmos::buscaBinaria(const std::vector<Card*>& colecaoOrdenada, const 
     return nullptr;
 }
 
-// --- Implementação da Busca de Rabin-Karp ---
-
-// Constantes para o algoritmo de Rabin-Karp
-#define d 256 // Número de caracteres no alfabeto ASCII
-#define q 113 // Um número primo para o módulo (ajuda a evitar colisões)
+#define d 256 
+#define q 113 
 
 int Algoritmos::buscaRabinKarp(const std::string& texto, const std::string& padrao) {
     int M = padrao.length();
     int N = texto.length();
     if (M > N) return -1;
 
-    int p_hash = 0; // hash para o padrão
-    int t_hash = 0; // hash para a janela do texto
+    int p_hash = 0; 
+    int t_hash = 0;
     int h = 1;
 
-    // Calcula h = (d^(M-1)) % q
     for (int i = 0; i < M - 1; i++) {
         h = (h * d) % q;
     }
 
-    // Calcula o hash inicial do padrão e da primeira janela do texto
     for (int i = 0; i < M; i++) {
         p_hash = (d * p_hash + padrao[i]) % q;
         t_hash = (d * t_hash + texto[i]) % q;
     }
 
-    // Desliza a janela sobre o texto
     for (int i = 0; i <= N - M; i++) {
-        // Se os hashes são iguais, verifica se é um match real
         if (p_hash == t_hash) {
             int j = 0;
             for (j = 0; j < M; j++) {
@@ -82,7 +73,6 @@ int Algoritmos::buscaRabinKarp(const std::string& texto, const std::string& padr
             }
         }
 
-        // Calcula o hash da próxima janela usando "rolling hash"
         if (i < N - M) {
             t_hash = (d * (t_hash - texto[i] * h) + texto[i + M]) % q;
             if (t_hash < 0) {

@@ -1,6 +1,6 @@
 #include "../../include/game_logic/Player.hpp"
 #include "../../include/game_logic/Inimigo.hpp" // Necessário para a função jogarCarta
-#include "../../include/Utils/Color.hpp" // Para cores no console
+#include "../../include/utils/Color.hpp" // Para cores no console
 #include <iostream>
 #include <algorithm> // Para std::shuffle e std::find
 #include <random>    // Para o motor de aleatoriedade
@@ -104,16 +104,14 @@ void Player::jogarCarta(Card* cartaSendoJogada, Inimigo& alvo) {
     }
 
     // Se a lógica de quebra de selo não foi ativada, o efeito normal da carta acontece
-    // (O switch que você já tem)
     switch (cartaSendoJogada->getTipo()) {
         case TipoEfeito::DANO:
             alvo.receberDano(cartaSendoJogada->getValor());
             break;
         case TipoEfeito::DEFESA:
-            // Se chegamos aqui, significa que a carta de defesa foi usada normalmente (não para quebrar selo)
             this->ganharArmadura(cartaSendoJogada->getValor());
             break;
-        // ... outros cases
+
     }
 
     // Move a carta para o descarte (se ainda não foi movida)
@@ -159,6 +157,11 @@ void Player::mostrarMao() const {
     std::cout << "-----------------------\n";
 }
 
+void Player::aplicarStatus(Status s, int stacks) {
+    if (stacks <= 0) return;
+    statusAtivos[s] += stacks;
+}
+
 void Player::mostrarStatus() const {
     std::cout << "Vida: " << Color::GREEN << vida << "/" << vidaMaxima << Color::RESET
               << " | Armadura: " << Color::BOLD_BLUE << armadura << Color::RESET
@@ -166,11 +169,59 @@ void Player::mostrarStatus() const {
     std::cout << "Cartas no Deck: " << deck.size() << " | Cartas no Descarte: " << descarte.size() << "\n";
 }
 
+void Player::tickStatusFimDoTurno() {
+    // VENENO aplica dano no fim do turno e decresce
+    auto it = statusAtivos.find(Status::VENENO);
+    if (it != statusAtivos.end() && it->second > 0) {
+        int dano = it->second;
+        this->receberDano(dano); // usar seu método existente de dano
+        it->second -= 1;
+    }
+    // reduzir duração de Vulnerável e Fraqueza
+    for (auto s : {Status::VULNERAVEL, Status::FRAQUEZA}) {
+        auto jt = statusAtivos.find(s);
+        if (jt != statusAtivos.end() && jt->second > 0) jt->second -= 1;
+    }
+    // limpar zeros
+    for (auto it2 = statusAtivos.begin(); it2 != statusAtivos.end(); ) {
+        if (it2->second <= 0) it2 = statusAtivos.erase(it2);
+        else ++it2;
+    }
+}
+
+int Player::ajustarDanoCausado(int base) const {
+    auto it = statusAtivos.find(Status::FRAQUEZA);
+    if (it != statusAtivos.end() && it->second > 0) {
+        // -25% arredondando para baixo
+        base = (base * 75) / 100;
+    }
+    return base;
+}
+
+int Player::ajustarDanoRecebido(int base) const { 
+    auto it = statusAtivos.find(Status::VULNERAVEL);
+    if (it != statusAtivos.end() && it->second > 0) {
+        // +50%
+        base = (base * 150) / 100;
+    }
+    return base;
+}
+
 void Player::adicionarFragmento(const FragmentoEtereo& fragmento) {
     fragmentosColetados.push_back(fragmento);
     std::cout << "Voce coletou: " << fragmento.nome << "!\n";
 }
 
+void Player::addRelic(const Relic& r) { 
+    reliquias.push_back(r);
+    reliquias.back().onGainRelic(*this);
+}
+void Player::onStartTurn_Relics() { 
+    for (auto& r : reliquias) r.onStartTurn(*this);
+}
+void Player::onPlayDefense_Relics() { 
+    for (auto& r : reliquias) r.onPlayDefense(*this);
+}
 
 void Player::mostrarFragmentos() const {
     std::cout << "\n--- Fragmentos Etéreos Coletados ---\n";
@@ -195,6 +246,19 @@ void Player::adicionarCartaAoDeck(Card* novaCarta) {
         descarte.push_back(novaCarta);
     }
 }
+
+void Player::curar(int quantidade) {
+    // Aumenta a vida do jogador
+    this->vida += quantidade;
+
+    // Garante que a vida não ultrapasse o máximo
+    if (this->vida > this->vidaMaxima) {
+        this->vida = this->vidaMaxima;
+    }
+    std::cout << "Jogador recuperou " << quantidade << " de vida! Vida atual: " 
+              << this->vida << "/" << this->vidaMaxima << std::endl;
+}
+
 
 bool Player::estaVivo() const { return this->vida > 0; }
 const std::vector<Card*>& Player::getMao() const { return this->mao; }

@@ -29,16 +29,12 @@ int main() {
         }
 
         switch (choice) {
-            // O CASE 1 EXECUTA O JOGO
             case 1:
             {
-                // Criamos um objeto Game. O construtor dele já prepara tudo.
                 Game jogo;
-                // Chamamos o método run(), que inicia o loop principal do jogo.
                 jogo.run();
                 break;
             }
-            // O CASE 2 EXECUTA OS TESTES
             case 2:
                 TestModule::runAllTests();
                 break;

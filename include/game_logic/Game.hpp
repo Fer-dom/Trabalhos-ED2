@@ -2,12 +2,13 @@
 
 #include "Player.hpp"
 #include "Inimigo.hpp"
+#include "StageMap.hpp"
 #include <vector>
 
-// Enum para controlar o estado principal do jogo
 enum class GameState {
+    MAP_VIEW,         
     IN_COMBAT,
-    POST_COMBAT,
+    POST_COMBAT_REWARD, 
     GAME_OVER_VICTORY,
     GAME_OVER_DEFEAT
 };
@@ -20,19 +21,17 @@ public:
 
 private:
     void gameLoop();
-    void processCombatInput();
-    void updateCombat();
-    // Funções chamadas a cada ciclo do loop
     void processInput(); 
     void update();       
     void render();       
+    void processMapInput();
     void processRewardInput();
     void awardFragment();
     void purificarFragmento(int indice);
-    // Membros da classe
     bool isRunning;
     GameState currentState;
     
     Player* player;
     Inimigo* currentEnemy;
+    StageMap* stageMap;
 };

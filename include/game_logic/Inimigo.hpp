@@ -13,15 +13,11 @@ class Player;
 class Inimigo {
 public:
     Inimigo(const std::string& nome, int vidaInicial, TipoInimigo tipo);
-
-    // Métodos públicos
     void receberDano(int quantidade);
     void mostrarStatus() const;
     void planejarAcao();
     void realizarAcao(Player& alvo);
     void quebrarSelo();
-
-    // Getters
     std::string getNome() const;
     int getVida() const;
     int getVidaMaxima() const;

@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Relic.hpp"
 #include "FragmentoEtereo.hpp"
+#include "Status.hpp"
+#include "Card.hpp"
 #include <vector>
 #include <string>
-#include "Card.hpp"
 
 class Inimigo; 
 
@@ -12,7 +14,7 @@ public:
     Player(int vidaInicial, int essenciaInicial, std::vector<Card*> deckInicial);
     ~Player();
 
-    // --- Métodos de Lógica de Jogo ---
+    void curar(int quantidade);
     int getDeckSize() const;
     void comprarCarta();
     void jogarCarta(Card* carta, Inimigo& alvo);
@@ -28,20 +30,36 @@ public:
     void adicionarFragmento(const FragmentoEtereo& fragmento);
     void mostrarFragmentos() const;
     void adicionarCartaAoDeck(Card* novaCarta); 
+    void aplicarStatus(Status s, int stacks);           
+    void tickStatusFimDoTurno();                        
+    int ajustarDanoCausado(int base) const;             
+    int ajustarDanoRecebido(int base) const; 
+    void addRelic(const Relic& r); 
+    void onStartTurn_Relics();  
+    void onPlayDefense_Relics();          
+    const StatusMap& getStatus() const { return statusAtivos; } 
     const std::vector<Card*>& getMao() const;
+    const std::vector<Relic>& getRelics() const { return reliquias; } 
     std::vector<FragmentoEtereo>& getFragmentos();
 
+    void addMana(int qtd);           
+    int  getMana() const;            
+    void addBlock(int qtd);          
+    void increaseMaxHP(int qtd);     
+    void heal(int qtd);              
+    void takeDamage(int qtd);        
+
 private:
-    // Atributos de status
-    int vida; // Vida atual do jogador
-    int vidaMaxima; // Vida máxima do jogador
-    int essenciaArcana; // Essência Arcana é a "energia" do jogador para jogar cartas
-    int armadura; // Armadura é a defesa temporária do jogador
-    bool meuTurno; // Indica se é o turno do jogador
-    std::vector<FragmentoEtereo> fragmentosColetados; // Fragmentos Etéreos coletados pelo jogador (loot)
-    // As coleções de cartas
+    
+    int vida;
+    int vidaMaxima; 
+    int essenciaArcana;
+    int armadura;
+    bool meuTurno;
+    StatusMap statusAtivos;
+    std::vector<Relic> reliquias;
+    std::vector<FragmentoEtereo> fragmentosColetados;
     std::vector<Card*> deck;
     std::vector<Card*> mao;
     std::vector<Card*> descarte;
-   
 };
